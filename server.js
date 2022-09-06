@@ -1,3 +1,4 @@
+// Imports:
 const express = require("express");
 const mongoose = require("mongoose");
 
@@ -21,4 +22,6 @@ mongoose.connect(
 
 mongoose.set("debug", true);
 
-app.listen(PORT, () => console.log(`🌍 Connected on localhost:${PORT}`));
+app.listen(PORT, () =>
+  console.log(`Successfully connected on localhost:${PORT}`)
+);
