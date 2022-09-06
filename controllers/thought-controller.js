@@ -2,6 +2,7 @@ const { User, Thought } = require("../models");
 
 const thoughtController = {
   // /api/thoughts
+
   // get all thoughts
   getAllThought(req, res) {
     Thought.find({})
@@ -17,6 +18,7 @@ const thoughtController = {
         res.sendStatus(400);
       });
   },
+
   // get one thoughts by id
   getThoughtById({ params }, res) {
     Thought.findOne({ _id: params.id })
@@ -38,6 +40,7 @@ const thoughtController = {
         res.sendStatus(400);
       });
   },
+
   createThought({ body }, res) {
     Thought.create(body)
       .then(({ _id }) => {
@@ -56,6 +59,7 @@ const thoughtController = {
       })
       .catch((err) => res.json(err));
   },
+
   // update Thought by id
   updateThought({ params, body }, res) {
     Thought.findOneAndUpdate({ _id: params.id }, body, {
@@ -71,6 +75,7 @@ const thoughtController = {
       })
       .catch((err) => res.json(err));
   },
+
   // delete thought by ID
   deleteThought({ params }, res) {
     Thought.findOneAndDelete({ _id: params.id })
@@ -93,6 +98,24 @@ const thoughtController = {
         res.json(dbUserData);
       })
       .catch((err) => res.json(err));
+  },
+
+  createReaction({ params, body }, res) {
+    Thought.findOneAndUpdate(
+      { _id: params.thoughtId },
+      { $push: { reactions: body } },
+      { new: true, runValidators: true }
+    )
+      .populate({ path: "reactions", select: "-__v" })
+      .select("-__v")
+      .then((dbThoughtData) => {
+        if (!dbThoughtData) {
+          res.status(404).json({ message: "No thoughts with this ID." });
+          return;
+        }
+        res.json(dbThoughtData);
+      })
+      .catch((err) => res.status(400).json(err));
   },
 };
 
