@@ -30,7 +30,9 @@ const thoughtController = {
       .sort({ _id: -1 })
       .then((dbThoughtData) => {
         if (!dbThoughtData) {
-          res.status(404).json({ message: "No thoughts found with that id!" });
+          res
+            .status(404)
+            .json({ message: "No thoughts were found with that id" });
           return;
         }
         res.json(dbThoughtData);
@@ -52,7 +54,7 @@ const thoughtController = {
       })
       .then((dbThoughtData) => {
         if (!dbThoughtData) {
-          res.status(404).json({ message: "No user found with this id!" });
+          res.status(404).json({ message: "No user was found with that id" });
           return;
         }
         res.json(dbThoughtData);
@@ -68,7 +70,9 @@ const thoughtController = {
     })
       .then((dbThoughtData) => {
         if (!dbThoughtData) {
-          res.status(404).json({ message: "No thoughts found with that id!" });
+          res
+            .status(404)
+            .json({ message: "No thoughts were found with that id" });
           return;
         }
         res.json(dbThoughtData);
@@ -81,7 +85,9 @@ const thoughtController = {
     Thought.findOneAndDelete({ _id: params.id })
       .then((dbThoughtData) => {
         if (!dbThoughtData) {
-          res.status(404).json({ message: "No thoughts found with that id!" });
+          res
+            .status(404)
+            .json({ message: "No thoughts were found with that id" });
           return;
         }
         return User.findOneAndUpdate(
@@ -92,7 +98,7 @@ const thoughtController = {
       })
       .then((dbUserData) => {
         if (!dbUserData) {
-          res.status(404).json({ message: "No User found with this id!" });
+          res.status(404).json({ message: "No user was found with that id" });
           return;
         }
         res.json(dbUserData);
@@ -110,12 +116,30 @@ const thoughtController = {
       .select("-__v")
       .then((dbThoughtData) => {
         if (!dbThoughtData) {
-          res.status(404).json({ message: "No thoughts with this ID." });
+          res
+            .status(404)
+            .json({ message: "No thoughts were found with this ID" });
           return;
         }
         res.json(dbThoughtData);
       })
       .catch((err) => res.status(400).json(err));
+  },
+
+  deleteReaction({ params }, res) {
+    Thought.findOneAndUpdate(
+      { _id: params.thoughtId },
+      { $pull: { reactions: { reactionId: params.reactionId } } },
+      { new: true }
+    )
+      .then((dbThoughtData) => {
+        if (!dbThoughtData) {
+          res.status(404).json({ message: "Nope!" });
+          return;
+        }
+        res.json(dbThoughtData);
+      })
+      .catch((err) => res.json(err));
   },
 };
 
