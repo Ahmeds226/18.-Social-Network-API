@@ -1,3 +1,4 @@
+// Imported user and thought models:
 const { User, Thought } = require("../models");
 
 const userController = {

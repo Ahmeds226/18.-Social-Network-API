@@ -1,9 +1,7 @@
+// Imported user and thought models:
 const { User, Thought } = require("../models");
 
 const thoughtController = {
-  // /api/thoughts
-
-  // get all thoughts
   getAllThought(req, res) {
     Thought.find({})
       .populate({
@@ -19,7 +17,6 @@ const thoughtController = {
       });
   },
 
-  // get one thoughts by id
   getThoughtById({ params }, res) {
     Thought.findOne({ _id: params.id })
       .populate({
@@ -30,9 +27,10 @@ const thoughtController = {
       .sort({ _id: -1 })
       .then((dbThoughtData) => {
         if (!dbThoughtData) {
-          res
-            .status(404)
-            .json({ message: "No thoughts were found with that id" });
+          res.status(404).json({
+            message:
+              "There were no thoughts found with this ID please try again",
+          });
           return;
         }
         res.json(dbThoughtData);
@@ -54,7 +52,9 @@ const thoughtController = {
       })
       .then((dbThoughtData) => {
         if (!dbThoughtData) {
-          res.status(404).json({ message: "No user was found with that id" });
+          res.status(404).json({
+            message: "There was no user found with this ID please try again",
+          });
           return;
         }
         res.json(dbThoughtData);
@@ -62,7 +62,6 @@ const thoughtController = {
       .catch((err) => res.json(err));
   },
 
-  // update Thought by id
   updateThought({ params, body }, res) {
     Thought.findOneAndUpdate({ _id: params.id }, body, {
       new: true,
@@ -70,9 +69,10 @@ const thoughtController = {
     })
       .then((dbThoughtData) => {
         if (!dbThoughtData) {
-          res
-            .status(404)
-            .json({ message: "No thoughts were found with that id" });
+          res.status(404).json({
+            message:
+              "There were no thoughts found with this ID please try again",
+          });
           return;
         }
         res.json(dbThoughtData);
@@ -80,14 +80,14 @@ const thoughtController = {
       .catch((err) => res.json(err));
   },
 
-  // delete thought by ID
   deleteThought({ params }, res) {
     Thought.findOneAndDelete({ _id: params.id })
       .then((dbThoughtData) => {
         if (!dbThoughtData) {
-          res
-            .status(404)
-            .json({ message: "No thoughts were found with that id" });
+          res.status(404).json({
+            message:
+              "There were no thoughts found with this ID please try again",
+          });
           return;
         }
         return User.findOneAndUpdate(
@@ -98,7 +98,9 @@ const thoughtController = {
       })
       .then((dbUserData) => {
         if (!dbUserData) {
-          res.status(404).json({ message: "No user was found with that id" });
+          res.status(404).json({
+            message: "There was no user found with this ID please try again",
+          });
           return;
         }
         res.json(dbUserData);
@@ -116,9 +118,10 @@ const thoughtController = {
       .select("-__v")
       .then((dbThoughtData) => {
         if (!dbThoughtData) {
-          res
-            .status(404)
-            .json({ message: "No thoughts were found with this ID" });
+          res.status(404).json({
+            message:
+              "There were no thoughts found with this ID please try again",
+          });
           return;
         }
         res.json(dbThoughtData);
