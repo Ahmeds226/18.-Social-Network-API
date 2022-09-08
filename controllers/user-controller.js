@@ -1,6 +1,7 @@
 // Imported user and thought models:
 const { User, Thought } = require("../models");
 
+// Get all users:
 const userController = {
   getAllUser(req, res) {
     User.find({})
@@ -13,6 +14,7 @@ const userController = {
       });
   },
 
+  // Get user via id:
   getUserById({ params }, res) {
     User.findOne({ _id: params.id })
       .populate({
@@ -38,12 +40,14 @@ const userController = {
       });
   },
 
+  // Create user:
   createUser({ body }, res) {
     User.create(body)
       .then((dbUserData) => res.json(dbUserData))
       .catch((err) => res.json(err));
   },
 
+  // Update user via id:
   updateUser({ params, body }, res) {
     User.findOneAndUpdate({ _id: params.id }, body, {
       new: true,
@@ -61,6 +65,7 @@ const userController = {
       .catch((err) => res.json(err));
   },
 
+  // Delete user via id:
   deleteUser({ params }, res) {
     Thought.deleteMany({ userId: params.id })
       .then(() => {
@@ -77,6 +82,7 @@ const userController = {
       .catch((err) => res.json(err));
   },
 
+  // Add friend via id:
   addFriend({ params }, res) {
     User.findOneAndUpdate(
       { _id: params.userId },
@@ -95,6 +101,7 @@ const userController = {
       .catch((err) => res.status(400).json(err));
   },
 
+  // Delete friend via id:
   deleteFriend({ params }, res) {
     User.findOneAndUpdate(
       { _id: params.userId },
