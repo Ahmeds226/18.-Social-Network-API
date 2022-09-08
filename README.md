@@ -26,10 +26,10 @@ THEN I am able to successfully create and delete reactions to thoughts and add a
 
 ## Walkthrough videos:
 
-User:
+User: https://drive.google.com/file/d/1_Tf3vC3az84lzU6phm4nt5rffRnfHV90/view?usp=sharing
 
-Thoughts:
+Thoughts: https://drive.google.com/file/d/1Byx5CL28tcACCURTjv3SxGV9hyCB0HU7/view?usp=sharing
 
-Reaction:
+Reaction: https://drive.google.com/file/d/1fhq0jOSMAxjpx6WPDCZs2FhweqCatbVX/view?usp=sharing
 
-Friends:
+Friends: https://drive.google.com/file/d/1LB8CPruUEcJd3KzanvXaooMub2ukZ2xR/view?usp=sharing
